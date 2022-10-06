@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShowHitMargin_Eng
+namespace ShowTimingWindowScale
 {
     /// <summary>
     /// Additional <see cref="GUILayout"/> components.

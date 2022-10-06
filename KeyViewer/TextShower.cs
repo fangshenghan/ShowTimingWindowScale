@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ShowHitMargin_Eng
+namespace ShowTimingWindowScale
 {
 
     public class TextBehaviour : MonoBehaviour

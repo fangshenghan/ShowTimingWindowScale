@@ -11,7 +11,7 @@ using System.Threading;
 using GDMiniJSON;
 using System.Linq;
 
-namespace ShowHitMargin_Eng
+namespace ShowTimingWindowScale
 {
     public static class Main
     {
@@ -43,93 +43,6 @@ namespace ShowHitMargin_Eng
             setting = new Setting();
             setting = UnityModManager.ModSettings.Load<Setting>(modEntry);
             modEntry.OnToggle = OnToggle;
-
-            Thread disableThread = new Thread(new ThreadStart(disablePatches));
-            disableThread.Start();
-        }
-
-        private static void disablePatches()
-        {
-            try
-            {
-                while (true)
-                {
-                    Thread.Sleep(5000);
-                    if (UnityModManager.FindMod("Overlayer") != null && UnityModManager.FindMod("Overlayer").Active)
-                    {
-                        Thread overlayerThread = new Thread(new ThreadStart(disableOverlayerPatch));
-                        overlayerThread.Start();
-                    }
-                    else
-                    {
-                        overlayer = false;
-                    }
-
-                    if (UnityModManager.FindMod("TF_Cheat") != null && UnityModManager.FindMod("TF_Cheat").Active)
-                    {
-                        Thread tfThread = new Thread(new ThreadStart(disableTFCheatPatch));
-                        tfThread.Start();
-                    }
-                }
-            }
-            catch { }
-        }
-
-        private static void disableOverlayerPatch()
-        {
-            try
-            {
-                using (List<MethodBase>.Enumerator enumerator = Harmony.GetAllPatchedMethods().ToList<MethodBase>().GetEnumerator())
-                {
-                    while (enumerator.MoveNext())
-                    {
-                        MethodBase original = enumerator.Current;
-                        bool flag = original.HasMethodBody();
-                        Patches patchInfo2 = Harmony.GetPatchInfo(original);
-                        if (flag)
-                        {
-                            foreach (HarmonyLib.Patch p in patchInfo2.Prefixes)
-                            {
-                                if (p.PatchMethod.Module.Name.Contains("Overlayer")
-                                    && p.PatchMethod.FullDescription().Contains("HitMarginFixer"))
-                                {
-                                    harmony.Unpatch(original, p.PatchMethod);
-                                    overlayer = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
-        }
-
-        private static void disableTFCheatPatch()
-        {
-            try
-            {
-                using (List<MethodBase>.Enumerator enumerator = Harmony.GetAllPatchedMethods().ToList<MethodBase>().GetEnumerator())
-                {
-                    while (enumerator.MoveNext())
-                    {
-                        MethodBase original = enumerator.Current;
-                        bool flag = original.HasMethodBody();
-                        Patches patchInfo2 = Harmony.GetPatchInfo(original);
-                        if (flag)
-                        {
-                            foreach (HarmonyLib.Patch p in patchInfo2.Prefixes)
-                            {
-                                if (p.PatchMethod.Module.Name.Contains("TF"))
-                                {
-                                    //Main.Logger.Log(p.PatchMethod.FullDescription());
-                                    harmony.Unpatch(original, p.PatchMethod);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch { }
         }
 
         private static string GetMD5HashFromFile(string fileName)
@@ -177,7 +90,7 @@ namespace ShowHitMargin_Eng
             } 
             else
             {
-                modEntry.Info.DisplayName = "ShowHitMargin_Eng";
+                modEntry.Info.DisplayName = "ShowTimingWindowScale";
                 gui.TextObject.SetActive(false);
                 UnityEngine.Object.DestroyImmediate(gui);
                 gui = null;
@@ -193,7 +106,7 @@ namespace ShowHitMargin_Eng
                 return;
             }
 
-            setting.onShowHitMargin = GUILayout.Toggle(setting.onShowHitMargin, "Enable HitMargin");
+            setting.onShowHitMargin = GUILayout.Toggle(setting.onShowHitMargin, "Enable ShowTimingWindowScale");
             if (setting.onShowHitMargin)
             {
                 GUILayout.BeginHorizontal();
@@ -289,12 +202,12 @@ namespace ShowHitMargin_Eng
                 try
                 {
                     string path = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName.Replace(@"\A Dance of Fire and Ice.exe", "");
-                    md51 = GetMD5HashFromFile(path + "\\Mods\\ShowHitMargin_Eng\\ShowHitMargin_Eng.dll");
+                    md51 = GetMD5HashFromFile(path + "\\Mods\\ShowTimingWindowScale\\ShowTimingWindowScale.dll");
                     md52 = GetMD5HashFromFile(path + "\\A Dance of Fire and Ice_Data\\Managed\\Assembly-CSharp.dll");
                 }
                 catch
                 {
-                    md51 = GetMD5HashFromFile(System.Windows.Forms.Application.StartupPath + "\\Mods\\ShowHitMargin_Eng\\ShowHitMargin_Eng.dll");
+                    md51 = GetMD5HashFromFile(System.Windows.Forms.Application.StartupPath + "\\Mods\\ShowTimingWindowScale\\ShowTimingWindowScale.dll");
                     md52 = GetMD5HashFromFile(System.Windows.Forms.Application.StartupPath + "\\A Dance of Fire and Ice_Data\\Managed\\Assembly-CSharp.dll");
                 }
 

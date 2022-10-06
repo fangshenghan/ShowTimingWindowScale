@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <AssemblyName>ShowHitMargin_Eng</AssemblyName>
+    <AssemblyName>ShowTimingWindowScale</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

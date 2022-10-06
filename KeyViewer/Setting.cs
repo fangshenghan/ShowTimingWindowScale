@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using UnityModManagerNet;
 
-namespace ShowHitMargin_Eng
+namespace ShowTimingWindowScale
 {
     public class Setting : UnityModManager.ModSettings
     {
